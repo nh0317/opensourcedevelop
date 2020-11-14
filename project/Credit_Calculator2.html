@@ -1,0 +1,640 @@
+<!DOCTYPE HTML>
+<!--
+	Editorial by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+		<title>광운 알리미</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+        <link rel="stylesheet" href="assets/css/credit.css" />
+        
+        <script>
+            function calc() {
+                var total = 0;
+                var ctotal=0;
+                var mtotal=0;
+                var mctotal=0;
+                var Garr = document.getElementsByClassName("grade");
+                var Carr = document.getElementsByClassName("credit");
+                
+                var Marr = document.getElementsByClassName("checkmajor");
+                for(i=0; i<Garr.length; i++) {
+                    var grade = Garr[i].options[Garr[i].selectedIndex].value;
+                    var credit = Carr[i].value;
+                    if((credit=="" || isNaN(credit))) {// 답이 없거나 문자가 입력된 경우
+                        total += 0;
+                        ctotal+= 0;
+                    }
+                    else{
+                    if(Marr[i].checked==true){
+                        var mgrade=parseFloat(grade);
+                        var mcredit=parseInt(credit);
+                        mtotal=mtotal+mgrade*mcredit;
+                        mctotal+=mcredit;
+                    }
+                        grade=parseFloat(grade);
+                        credit=parseInt(credit);
+                        total=total+grade*credit;
+                        ctotal+=credit;
+                    }
+                }
+                if(total==0 || ctotal==0){
+                    document.getElementById("score").innerHTML = "";
+                }
+                else if (mtotal==0){
+                    document.getElementById("score").innerHTML = "총 평점: " + (total/ctotal).toFixed(2)+ "  전공 평점: " +0+"  취득 학점: "+ctotal;
+                }
+                else{
+                    document.getElementById("score").innerHTML = "총 평점: " + (total/ctotal).toFixed(2)+ "  전공 평점: " +(mtotal/mctotal).toFixed(2)+"  취득 학점: "+ctotal;
+                }
+            }
+            function calcGoal() {
+                var total = 0;
+                var goal= document.getElementsByClassName("goal")
+                var num= document.getElementsByClassName("subjectNum")
+                num=parseInt(num[0].value)
+                var count=0;
+                var grade = [4.5,4.0,3.5,3.0,2.5,2.0,1.5,1.0];
+                var result= new Array();
+                var Aarr = document.getElementsByClassName("average");
+                var Rarr = document.getElementsByClassName("result");
+                for(var i=0; i<Aarr.length; i++) {
+                    var average = Aarr[i].value;
+                    if(average=="" || isNaN(average)) {// 답이 없거나 문자가 입력된 경우
+                        total += 0;
+                    }
+                    else if(average>4.5){
+                        alert("올바르지 않은 학점 4.5 이하 값 입력");
+                        return;
+                    }
+                    else{
+                        average=parseFloat(average);
+                        total+=average;
+                        count++;
+                    }
+                }
+                if(parseFloat(goal[0].value)>4.5){
+                        alert("올바르지 않은 학점 4.5 이하 값 입력");
+                        return;
+                    }
+                goal=parseFloat(goal[0].value)*(count+1);
+                goal-=total
+                var temp=goal
+                var count=num;
+                var index=0
+                if(temp>4.5){
+                    alert("불가능합니다");
+                    return;
+                }
+                else if(temp==4.5){
+                    Rarr[0].value=count;
+                    temp=0;
+                }
+                else Rarr[0].value=0;
+                for(var i=1; i<grade.length;i++){
+                    if(grade[i]<=temp && temp<grade[i-1]){
+                        Rarr[i].value=count;
+                        temp-=grade[i]
+                        index=i;
+                    }
+                    else Rarr[i].value=0;
+                }
+                if(temp!=0){
+                    temp*=num;
+                    temp=parseInt(temp/0.5);
+                    Rarr[index].value=parseInt(Rarr[index].value)-temp
+                    Rarr[index-1].value=parseInt(Rarr[index-1].value)+temp
+                    if(temp%=0.5!=0){
+                    Rarr[index].value=parseInt(Rarr[index].value)-1
+                    Rarr[index-1].value=parseInt(Rarr[index-1].value)+1
+                    }
+                    
+                }
+            }
+            function append(obj){
+                obj=obj.parentElement
+                obj=obj.parentElement
+                obj=obj.parentElement
+                obj=obj.previousElementSibling
+                var newOb=obj.firstElementChild;
+                var copyOb=newOb.cloneNode(true);
+                obj.appendChild(copyOb);
+            }
+            function calcGuide(obj) {
+
+                var Carr = document.getElementsByClassName("credit2");
+                var totalCredit=0;
+                var Gtotal=document.getElementById("totalGrade").value;
+                var last=document.getElementById("last").value;
+                var pre=document.getElementById("preGraduate").value;
+                var graduate=document.getElementById("graduate").value;
+                if(Gtotal==""|| isNaN(Gtotal)|| last==""||last==isNaN(last))
+                    return;
+                if(pre=="" || graduate==""){
+                    if(pre=="" && graduate=="") {
+                        pre=0
+                        graduate=0
+                    }
+                    else if(pre=="") {
+                        pre=0
+                        last-=1;
+                    }
+                    else if(graduate=="") {
+                        graduate=0
+                        last-=1;
+                    }
+                }
+                else {
+                    last-=2;
+                }
+                for(i=0; i<Carr.length; i++) {
+                    var credit = Carr[i].value;
+                    if(credit=="" || isNaN(credit)) {// 답이 없거나 문자가 입력된 경우
+                        totalCredit += 0;
+                    }
+                    else{
+                        credit=parseInt(credit);
+                        totalCredit+=credit;
+                    }
+                }
+                Gtotal=Gtotal-totalCredit-graduate-pre;
+                Gtotal/=last;
+                temp=Math.floor(Gtotal)
+                if(temp!=Gtotal){
+                    Gtotal-=temp
+                    Gtotal*=last
+                    var index = Math.ceil(Gtotal)
+                    last-=index;
+                    document.getElementById("answer").innerHTML =temp+1+"학점 "+index+"학기 "+temp+"학점 "+last+"학기"
+                
+                }
+                else
+                document.getElementById("answer").innerHTML =temp+"학점 "+last+"학기"
+                
+                
+            }
+        </script>
+	</head>
+	<body class="is-preload">
+
+		<!-- Wrapper -->
+			<div id="wrapper">
+
+				<!-- Main -->
+					<div id="main">
+						<div class="inner">
+
+							<!-- Header -->
+								<header id="header">
+									<a href="index.html" class="logo"><strong style="color: brown;">Kwangwoon</strong> assistant</a>
+									<ul class="icons">
+										<li><a href="#" class="icon brands fa-twitter"><span class="label">Twitter</span></a></li>
+										<li><a href="#" class="icon brands fa-facebook-f"><span class="label">Facebook</span></a></li>
+										<li><a href="#" class="icon brands fa-snapchat-ghost"><span class="label">Snapchat</span></a></li>
+										<li><a href="#" class="icon brands fa-instagram"><span class="label">Instagram</span></a></li>
+										<li><a href="#" class="icon brands fa-medium-m"><span class="label">Medium</span></a></li>
+									</ul>
+								</header>
+
+							<!-- Banner -->
+								<section id="banner">
+									<div class="content">
+										<header>
+											<h1>Introducing<br/>
+											<strong style="color: brown;">Credit Calculator</strong></h1>
+											<p>for kwangwoon university students</p>
+										</header>
+										<p>
+                                            광운대 학생분들을 위한 학점 계산기 입니다.<br>
+                                            기존 학점 계산기에 몇 가지 기능을 추가했습니다.<br>
+                                            <ol type="1.">
+                                                <li><a href="#1">학점 가이드라인</a></li>
+                                                <li><a href="#2">목표 학점 계산</a></li>
+                                                <li><a href="#3">학점 계산기</a></li>
+                                                </li>
+                                            </ol>
+										</p>
+									</div>
+									<span class="image object" >
+										<img src="images/calculator.jpg" alt="" />
+									</span>
+								</section>
+
+							<!-- Section -->
+								<section>
+									<header class="major">
+										<h2 style="font-family:'Nanum Gothic';" id="1">학점 가이드라인</h2>
+									</header><article style="width: 100%;">
+										<div class="content">
+											<h3 style="font-family:'Nanum Gothic';">&lt;학점 가이드라인&gt;</h3>
+                                            <p>졸업 요건에 따라 매 학기 들어야하는 학점에 대한 가이드라인을 제시합니다<br>
+                                                마지막 학년의 학점을 입력하지 않을 경우 마지막 학년을 포함하여 평균을 계산합니다.<br>
+                                                남은 학기는 졸업학년의 학기를 포함하여 입력해주세요<br>
+                                                예) 총 학기가 8학기이고 4학기를 수강한 경우 남은 학기는 4학기<br>
+                                                <strong style="color: red;">이는 가이드라인일 뿐 본인이 다시 한 번 검토하는 것을 권장합니다.</strong>
+                                                </p>
+										</div>
+									</article>
+									<article style="width: 100%;">
+                                        <div class="content" style="text-align: center;">
+                                            <table style="width: 100%;">
+                                            <thead>
+                                                <tr><th>졸업 학점</th><th>7학기(9학기) 신청 학점</th><th>8학기(10학기) 신청 학점</th><th>남은 학기</th></tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr><td><input type="text" id="totalGrade"></td>
+                                                    <td><input type="text" id="preGraduate"></td>
+                                                    <td><input type="text" id="graduate"></td>
+                                                    <td><input type="text" id="last"></td></tr>
+                                            </tbody>
+                                        </table>
+                                        <table style="width: 100%;">
+                                            <thead>
+                                                <tr><th>각 학기 취득 학점</th></tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr><td><input type="text" class="credit2"></td></tr>
+                                                <tr><td><input type="text" class="credit2"></td></tr>
+                                                <tr><td><input type="text" class="credit2"></td></tr>
+                                                <tr><td><input type="text" class="credit2"></td></tr>
+                                                <tr><td><input type="text" class="credit2"></td></tr>
+                                                <tr><td><input type="text" class="credit2"></td></tr>
+                                            </tbody>
+                                            <tfoot>
+                                                <tr><td><button type="button" onclick="calcGuide(this)">계산하기</button>
+                                                    <button type="button" onclick="append(this)">학기 추가</button></td>
+                                                </tr>
+                                            </tfoot>
+                                        </table>
+                                        <div id="answer">
+
+                                        </div>
+                                    </article>
+                                </section>
+
+                                <section>
+									<header class="major">
+										<h2 style="font-family:'Nanum Gothic';" id="2">목표 학점 계산 </h2>
+									</header><article style="width: 100%;">
+										<div class="content">
+											<h3 style="font-family:'Nanum Gothic';">&lt;목표 학점 계산&gt;</h3>
+                                            <p>원하는 평점에 도달하기 위해서 이번 학기에 필요한 점수를 계산합니다.<br>
+                                                분산이 가장 작도록 계산합니다<br>
+                                                하나의 예시일 뿐 다른 경우의 수가 많습니다. 
+                                            </p>
+										</div>
+                                    </article>
+                                    
+									<div class="features">
+                                    <article style="width: 100%;">
+                                        <div class="content" style="text-align: center;">
+                                            <table style="width: 100%;">
+                                            <thead>
+                                                <tr><th>목표 학점</th><th>들을 과목 수</th></tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr><td><input type="text" class="goal"></td>
+                                                    <td><input type="text" class="subjectNum"></td></tr>
+                                            </tbody>
+                                            </table>
+                                        </div>
+                                    </article>
+                                    <article>
+                                        <div class="content" style="text-align: center;">
+                                            <table style="display: inline-table">
+                                                <thead>
+                                                    <tr><th>각 학기 평점</th></tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr><td><input type="text" class="average"></td></tr>
+                                                    <tr><td><input type="text" class="average"></td></tr>
+                                                    <tr><td><input type="text" class="average"></td></tr>
+                                                    <tr><td><input type="text" class="average"></td></tr>
+                                                    <tr><td><input type="text" class="average"></td></tr>
+                                                    <tr><td><input type="text" class="average"></td></tr>
+                                                    <tr><td><input type="text" class="average"></td></tr>
+                                                    <tr><td><input type="text" class="average"></td></tr>
+                                                </tbody>
+                                                <tfoot>
+                                                    <tr><td><button type="button" onclick="calcGoal()">계산하기</button>
+                                                        <button type="button" onclick="append(this)">학기 추가</button></td>
+                                                    </tr>
+                                                </tfoot>
+                                            </table>
+                                        </div>
+                                        </article>
+                                        <article>
+                                            <div class="content" style="text-align: center;">
+                                            <table style="display: inline-table;">
+                                                <thead>
+                                                    <tr><th>목표 점수</th><th>갯수</th></tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr><td>A+</td><td><input type="text" class="result" value="0"></td></tr>
+                                                    <tr><td>A0</td><td><input type="text" class="result" value="0"></td></tr>
+                                                    <tr><td>B+</td><td><input type="text" class="result" value="0"></td></tr>
+                                                    <tr><td>B0</td><td><input type="text" class="result" value="0"></td></tr>
+                                                    <tr><td>C+</td><td><input type="text" class="result" value="0"></td></tr>
+                                                    <tr><td>C0</td><td><input type="text" class="result" value="0"></td></tr>
+                                                    <tr><td>D+</td><td><input type="text" class="result" value="0"></td></tr>
+                                                    <tr><td>D0</td><td><input type="text" class="result" value="0"></td></tr>
+                                                    <tr><td>F</td><td><input type="text" class="result" value="0"></td></tr>
+                                                </tbody>
+                                            </table>
+                                            </div>
+                                        </article>
+                                    </article>
+                                </section>
+                            
+                                <section>
+									<header class="major">
+										<h2 style="font-family:'Nanum Gothic';" id="3">학점 계산기 </h2>
+                                    </header>
+                                    <article style="width: 100%;">
+										<div class="content">
+											<h3 style="font-family:'Nanum Gothic';">&lt;학점 계산기&gt;</h3>
+                                            <p>
+                                                기존의 학점 계산기 입니다.<br>
+                                                입력하신 과목들의 평균 학점을 계산합니다<br>
+                                                PC 환경에 최적화되어 있습니다. <br>
+                                            </p>
+										</div>
+									</article>
+                                        <article style="width: 100%;">
+                                            <div class="content" style="text-align: center;">
+                                                <table >
+                                                    <thead>
+                                                        <tr><th style="width: 40%;">과목</th><th style="width: 8em;">점수</th><th style="width: 5em;">학점</th><th style="width: 5em;">전공</th></tr>
+                                                    </thead>
+                                                    <tbody id="calcTable">
+                                                        <tr id="copy">
+                                                            <td><input type="text"></td>
+                                                            <td><select class="grade">
+                                                                <option value="4.5">A+</option>
+                                                                <option value="4.0">A0</option>
+                                                                <option value="3.5">B+</option>
+                                                                <option value="3.0">B0</option>
+                                                                <option value="2.5">C+</option>
+                                                                <option value="2.0">C0</option>
+                                                                <option value="1.5">D+</option>
+                                                                <option value="1.0">D0</option>
+                                                                <option value="0">F</option>
+                                                            </select></td>
+                                                            <td><input type="text" class="credit" value=0></td>
+                                                            <td style="width: 5em; padding: 0%;"><input type="checkbox" class="checkmajor" value="1"></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td><input type="text"></td>
+                                                            <td><select class="grade" >
+                                                                <option value="4.5">A+</option>
+                                                                <option value="4.0">A0</option>
+                                                                <option value="3.5">B+</option>
+                                                                <option value="3.0">B0</option>
+                                                                <option value="2.5">C+</option>
+                                                                <option value="2.0">C0</option>
+                                                                <option value="1.5">D+</option>
+                                                                <option value="1.0">D0</option>
+                                                                <option value="0">F</option>
+                                                            </select></td>
+                                                            <td><input type="text" class="credit" value=0></td>
+                                                            <td style="width: 5em; padding: 0%;"><input type="checkbox" class="checkmajor" value="1"></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td><input type="text"></td>
+                                                            <td><select class="grade" >
+                                                                <option value="4.5">A+</option>
+                                                                <option value="4.0">A0</option>
+                                                                <option value="3.5">B+</option>
+                                                                <option value="3.0">B0</option>
+                                                                <option value="2.5">C+</option>
+                                                                <option value="2.0">C0</option>
+                                                                <option value="1.5">D+</option>
+                                                                <option value="1.0">D0</option>
+                                                                <option value="0">F</option>
+                                                            </select></td>
+                                                            <td><input type="text" class="credit" value=0></td>
+                                                            <td style="width: 5em; padding: 0%;"><input type="checkbox" class="checkmajor" value="1"></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td><input type="text"></td>
+                                                            <td><select class="grade" >
+                                                                <option value="4.5">A+</option>
+                                                                <option value="4.0">A0</option>
+                                                                <option value="3.5">B+</option>
+                                                                <option value="3.0">B0</option>
+                                                                <option value="2.5">C+</option>
+                                                                <option value="2.0">C0</option>
+                                                                <option value="1.5">D+</option>
+                                                                <option value="1.0">D0</option>
+                                                                <option value="0">F</option>
+                                                            </select></td>
+                                                            <td><input type="text" class="credit" value=0></td>
+                                                            <td style="width: 5em; padding: 0%;"><input type="checkbox" class="checkmajor" value="1"></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td><input type="text"></td>
+                                                            <td><select class="grade" >
+                                                                <option value="4.5">A+</option>
+                                                                <option value="4.0">A0</option>
+                                                                <option value="3.5">B+</option>
+                                                                <option value="3.0">B0</option>
+                                                                <option value="2.5">C+</option>
+                                                                <option value="2.0">C0</option>
+                                                                <option value="1.5">D+</option>
+                                                                <option value="1.0">D0</option>
+                                                                <option value="0">F</option>
+                                                            </select></td>
+                                                            <td><input type="text" class="credit" value=0></td>
+                                                            <td style="width: 5em; padding: 0%;"><input type="checkbox" class="checkmajor" value="1"></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td><input type="text"></td>
+                                                            <td><select class="grade" >
+                                                                <option value="4.5">A+</option>
+                                                                <option value="4.0">A0</option>
+                                                                <option value="3.5">B+</option>
+                                                                <option value="3.0">B0</option>
+                                                                <option value="2.5">C+</option>
+                                                                <option value="2.0">C0</option>
+                                                                <option value="1.5">D+</option>
+                                                                <option value="1.0">D0</option>
+                                                                <option value="0">F</option>
+                                                            </select></td>
+                                                            <td><input type="text" class="credit" value=0></td>
+                                                            <td style="width: 5em; padding: 0%;"><input type="checkbox" class="checkmajor" value="1"></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td><input type="text"></td>
+                                                            <td><select class="grade" >
+                                                                <option value="4.5">A+</option>
+                                                                <option value="4.0">A0</option>
+                                                                <option value="3.5">B+</option>
+                                                                <option value="3.0">B0</option>
+                                                                <option value="2.5">C+</option>
+                                                                <option value="2.0">C0</option>
+                                                                <option value="1.5">D+</option>
+                                                                <option value="1.0">D0</option>
+                                                                <option value="0">F</option>
+                                                            </select></td>
+                                                            <td><input type="text" class="credit" value=0></td>
+                                                            <td style="width: 5em; padding: 0%;"><input type="checkbox" class="checkmajor" value="1"></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td><input type="text"></td>
+                                                            <td><select class="grade" >
+                                                                <option value="4.5">A+</option>
+                                                                <option value="4.0">A0</option>
+                                                                <option value="3.5">B+</option>
+                                                                <option value="3.0">B0</option>
+                                                                <option value="2.5">C+</option>
+                                                                <option value="2.0">C0</option>
+                                                                <option value="1.5">D+</option>
+                                                                <option value="1.0">D0</option>
+                                                                <option value="0">F</option>
+                                                            </select></td>
+                                                            <td><input type="text" class="credit" value=0></td>
+                                                            <td style="width: 5em; padding: 0%;"><input type="checkbox" class="checkmajor" value="1"></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td><input type="text"></td>
+                                                            <td><select class="grade" >
+                                                                <option value="4.5">A+</option>
+                                                                <option value="4.0">A0</option>
+                                                                <option value="3.5">B+</option>
+                                                                <option value="3.0">B0</option>
+                                                                <option value="2.5">C+</option>
+                                                                <option value="2.0">C0</option>
+                                                                <option value="1.5">D+</option>
+                                                                <option value="1.0">D0</option>
+                                                                <option value="0">F</option>
+                                                            </select></td>
+                                                            <td><input type="text" class="credit" value=0></td>
+                                                            <td style="width: 5em; padding: 0%;"><input type="checkbox" class="checkmajor" value="1"></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td><input type="text"></td>
+                                                            <td><select class="grade" >
+                                                                <option value="4.5">A+</option>
+                                                                <option value="4.0">A0</option>
+                                                                <option value="3.5">B+</option>
+                                                                <option value="3.0">B0</option>
+                                                                <option value="2.5">C+</option>
+                                                                <option value="2.0">C0</option>
+                                                                <option value="1.5">D+</option>
+                                                                <option value="1.0">D0</option>
+                                                                <option value="0">F</option>
+                                                            </select></td>
+                                                            <td><input type="text" class="credit" value=0></td>
+                                                            <td style="width: 5em; padding: 0%;"><input type="checkbox" class="checkmajor" value="1"></td>
+                                                        </tr>
+                                                    </tbody>
+                                                    <tfoot>
+                                                        <tr>
+                                                            <td><button type="button" onclick="calc()">계산하기</button>
+                                                                <button type="button" onclick="append(this)">과목 추가</button></td>
+                                                        </tr>
+                                                    </tfoot>
+                                                </table>
+                                                <div id="score">
+                                                    
+                                                </div>
+                                        </article>
+                                </section>
+						</div>
+					</div>
+
+				<!-- Sidebar --> 
+					<div id="sidebar">
+						<div class="inner">
+
+							<!-- Menu -->
+                                <nav id="menu">
+                                    <header class="major">
+                                        <h2>Menu</h2>
+                                    </header>
+                                    <ul>
+                                        <li><a href="index.html">홈으로 돌아가기</a></li>
+                                        <li>
+                                            <span class="opener">교내 페이지 모음</span>
+                                            <ul>
+                                                <li><a href="#">page1</a></li>
+                                                <li><a href="#">page2</a></li>
+                                                <li><a href="#">page3</a></li>
+                                                <li><a href="#">page4</a></li>
+                                            </ul>
+                                        </li>
+                                        <li>
+                                            <span class="opener">신입생을 위한 정보</span>
+                                            <ul>
+                                                <li><a href="#">수강신청 노하우</a></li>
+                                                <li><a href="kwClub.html">추천 동아리</a></li>
+                                                <li><a href="#">각종 팁들</a></li>
+                                                <li><a href="makeTimetable.html">시간표 짜는 방법</a></li>
+                                            </ul>
+                                        </li>
+                                        <li><a href="./app.html">추천 어플 소개</a></li>
+                                        <li><a href="#">취업, 진로관련</a></li>
+                                        <li><a href="#">학과별 커리큘럼</a></li>
+                                        <li><a href="./Credit_Calculator2.html">학점 계산</a></li>
+                                    </ul>
+                                </nav>
+
+							<!-- Section -->
+								<section>
+									<header class="major">
+										<h2>Kwangwoon Issue</h2>
+									</header>
+									<div class="mini-posts">
+										<article>
+											<a href="https://www.donga.com/news/article/all/20201008/103297108/1" class="image" target="_blank"><img src="images/pic07.jpg" alt="" /></a>   <!-- 사이드바 이미지1 -->
+											<p>유지상 광운대 총장 "ICT역량으로 승부할 것..."</p>
+										</article>
+										<article>
+											<a href="https://www.kw.ac.kr/ko/life/newsletter.jsp?BoardMode=view&DUID=34093" target="_blank" class="image"><img src="images/pic08.jpg" alt="" /></a>  <!-- 사이드바 이미지2 -->
+											<p>광운대 2021학년도 수시모집에 평균 13.54대1 경쟁률 기록 </p>
+										</article>
+										<article>
+											<a href="https://www.kw.ac.kr/ko/life/newsletter.jsp?BoardMode=view&DUID=34114" target="_blank" class="image"><img src="images/pic09.jpg" alt="" /></a>   <!-- 사이드바 이미지3 -->
+											<p>손희상 교수(화학공학과), 제7회 젊은공학교육자상 수상 </p>
+										</article>
+									</div>
+									<ul class="actions">
+										<li><a href="https://www.kw.ac.kr/ko/" class="button">More</a></li>  <!-- more버튼 광운대학교와 연결 -->
+									</ul>
+								</section>
+
+							<!-- Section -->
+								<section>
+									<header class="major">
+										<h2>Get in touch</h2>
+									</header>
+									<ul class="contact">
+										<li class="icon solid fa-envelope"><a href="#">liyusang1@naver.com</a></li>
+										<li class="icon solid fa-phone">02-940-5114</li>
+										<li class="icon solid fa-home">서울특별시 노원구 광운로 20<br />
+										20 Gwangun-ro Nowon-gu Seoul</li>
+									</ul>
+								</section>
+
+							<!-- Footer -->
+								<footer id="footer">
+									<p class="copyright">&copy;광운대학교 소프트웨어학부 All rights reserved. <a href="https://unsplash.com">Unsplash</a>. Design: <a href="https://html5up.net">HTML5 UP</a>.</p>
+								</footer>
+
+						</div>
+					</div>
+
+			</div>
+
+		<!-- Scripts -->
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/browser.min.js"></script>
+			<script src="assets/js/breakpoints.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<script src="assets/js/main.js"></script>
+
+	</body>
+</html>
