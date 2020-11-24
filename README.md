@@ -10,5 +10,5 @@
 ### 2. 설치 방법
     해당 사이트는 특별한 설치방법이 없어서 접속하기에 매우 간편합니다.
     데스크탑이나 노트북으로 접속하는 것을 권장드리며, 
-    [사이트약자]<https://liyusang1.github.io/opensourcedevelop/project/index.html> 해당 링크로 접속하여 사이트를 이용하시면 됩니다.
+    https://liyusang1.github.io/opensourcedevelop/project/index.html 해당 링크로 접속하여 사이트를 이용하시면 됩니다.
 ### 3. 사용 방법
