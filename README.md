@@ -10,14 +10,14 @@
     해당 사이트는 특별한 설치 방법이 없어서 접속하기에 매우 간편합니다.
     데스크탑이나 노트북으로 접속하는 것을 권장해 드리며, 
     밑의 링크로 접속하여 사이트를 이용하시면 됩니다.
-#### **사이트 접속하기** : <https://liyusang1.github.io/opensourcedevelop/project/index.html>
+> #### *<u>사이트 접속하기</u>* : <https://liyusang1.github.io/opensourcedevelop/project/index.html>
 ### 3. 사용 방법
     사이트에 접속하면 메인 페이지로 접속하게 됩니다.
     사이드바에서 원하는 메뉴를 선택하면 해당 페이지로 이동합니다.
     밑의 사진을 참고하면 더 쉽게 사이트를 이용할 수 있습니다.
 ![mainpage_guide](./project/images/mainpage_guide.png)
 
-    예를 들어, '교내페이지 모음' 관련 정보를 얻기위해 해당 페이지로 이동해보겠습니다.
+    예를 들어, '교내페이지 모음' 관련 정보를 얻기 위해 해당 페이지로 이동해보겠습니다.
 ![subpage_guide](./project/images/subpage_guide.png)
 
     이동하면 다음과 같은 페이지가 뜨고, 정보를 확인할 수 있습니다.
@@ -25,4 +25,4 @@
     
 <br>
 
-#### 사이트를 이용하면서 문의사항이 있으신 경우나, 추가개발에 기여하고 싶으신 경우에는 *liyusang1@naver.com*로 연락 부탁드립니다 :)
+#### 사이트를 이용하면서 문의 사항이 있으신 경우나, 추가개발에 기여하고 싶으신 경우에는 *liyusang1@naver.com*으로 연락 부탁드립니다 :)
