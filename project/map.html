@@ -1,0 +1,407 @@
+<!DOCTYPE HTML>
+<!--
+	Editorial by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+		<title>CompusTour</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="assets/css/main.css" />
+        
+        <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=6260238809165d8acbd7c6106a164e44&libraries=services"></script>
+    <script>
+        // 주소로 좌표를 검색합니다
+        var markers = [];
+        var windows=[];
+        function myMarker(string){          var location;
+                                            markers[0].setMap(null);
+                                            windows[0].close();
+                                            windows.pop();
+                                            markers.pop();
+                                            // 지도를 생성합니다    
+                                            if(string=='복지관'){
+                                                var bounds = new kakao.maps.LatLngBounds();
+                                                var markerPosition  = new kakao.maps.LatLng(37.619443, 127.058315); 
+                                                    bounds.extend(new kakao.maps.LatLng(37.619443, 127.058315));
+
+                                                    // 검색된 장소 위치를 기준으로 지도 범위를 재설정합니다
+                                                    map.setBounds(bounds);
+                                                // 마커를 생성합니다
+                                                var marker = new kakao.maps.Marker({
+                                                    position: markerPosition
+                                                });
+                                                var infowindow = new kakao.maps.InfoWindow({
+                                                        content: '<div style="width:150px;text-align:center;padding:3px 0;">'+string+'</div>'
+                                                    });
+                                                    marker.setMap(map);
+                                                    markers.push(marker);
+                                                    infowindow.open(map, marker);
+                                                    windows.push(infowindow);
+                                                    document.getElementById("image").innerHTML = '<img src="images/map5.jpg" alt="" width="100%"/>'
+                                                    document.getElementById("info").innerHTML = '사진 출처: 더위키 (CC BY-NC-SA 2.0 KR)<br>'
+                                                return;
+                                            }
+                                            else if(string=='광운미디어콘텐츠센터'){
+                                                location='서울 노원구 월계동 380-1';
+                                            }
+                                            else{
+                                                location="광운대 "+string
+                                            }
+                                            // 장소 검색 객체를 생성합니다
+                                            var ps = new kakao.maps.services.Places(); 
+
+                                            // 키워드로 장소를 검색합니다
+                                            ps.keywordSearch(location, placesSearchCB); 
+
+                                            // 키워드 검색 완료 시 호출되는 콜백함수 입니다
+                                            function placesSearchCB (data, status, pagination) {
+                                                if (status === kakao.maps.services.Status.OK) {
+
+                                                    // 검색된 장소 위치를 기준으로 지도 범위를 재설정하기위해
+                                                    // LatLngBounds 객체에 좌표를 추가합니다
+                                                    var bounds = new kakao.maps.LatLngBounds();
+                                                    displayMarker(data[0]);    
+                                                    bounds.extend(new kakao.maps.LatLng(data[0].y, data[0].x));
+
+                                                    // 검색된 장소 위치를 기준으로 지도 범위를 재설정합니다
+                                                    map.setBounds(bounds);
+                                                } 
+                                            } 
+                                            function displayMarker(place) {
+                                                // 마커를 생성하고 지도에 표시합니다
+                                                var marker = new kakao.maps.Marker({
+                                                    map: map,
+                                                    position: new kakao.maps.LatLng(place.y, place.x) 
+                                                });
+                                                
+                                                var infowindow = new kakao.maps.InfoWindow({
+                                                        content: '<div style="width:150px;text-align:center;padding:3px 0;">'+string+'</div>'
+                                                    });
+                                                    marker.setMap(map);
+                                                    markers.push(marker);
+                                                    infowindow.open(map, marker);
+                                                    windows.push(infowindow);
+                                                }
+                                            switch (string){
+                                            case '화도관':
+                                            document.getElementById("image").innerHTML = '<img src="images/map1.jpg" alt="" width="100%"/>'
+                                            document.getElementById("info").innerHTML = '사진 출처: 더위키 (CC BY-NC-SA 2.0 KR)<br>'
+                                            break;
+                                            case '비마관':
+                                            document.getElementById("image").innerHTML = '<img src="images/map2.jpg" alt="" width="100%"/>'
+                                            document.getElementById("info").innerHTML = '사진 출처: 더위키 (CC BY-NC-SA 2.0 KR)<br>'
+                                            break;
+                                            case '옥의관':
+                                            document.getElementById("image").innerHTML = '<img src="images/map3.jpg" alt="" width="100%"/>'
+                                            document.getElementById("info").innerHTML = '사진 출처: 더위키 (CC BY-NC-SA 2.0 KR)<br>'
+                                            break;
+                                            case '중앙도서관':
+                                            document.getElementById("image").innerHTML = '<img src="images/map4.jpg" alt="" width="100%"/>'
+                                            document.getElementById("info").innerHTML = '사진 출처: 더위키 (CC BY-NC-SA 2.0 KR)<br>'
+                                            break;
+                                            case '연구관':
+                                            document.getElementById("image").innerHTML = '<img src="images/map6.jpg" alt="" width="100%"/>'
+                                            document.getElementById("info").innerHTML = '사진 출처: 더위키 (CC BY-NC-SA 2.0 KR)<br>'
+                                            break;
+                                            case '다산재':
+                                            document.getElementById("image").innerHTML = '<img src="images/map7.jpg" alt="" width="100%"/>'
+                                            document.getElementById("info").innerHTML = '사진 출처: 더위키 (CC BY-NC-SA 2.0 KR)<br>'
+                                            break;
+                                            case '참빛관':
+                                            document.getElementById("image").innerHTML = '<img src="images/map8-1.jpg" alt="" width="100%"/>'
+                                            document.getElementById("info").innerHTML = '사진 출처: 더위키 (CC BY-NC-SA 2.0 KR)<br>'
+                                            break;
+                                            case '연촌재':
+                                            document.getElementById("image").innerHTML = '<img src="images/map8.jpg" alt="" width="100%"/>'
+                                            document.getElementById("info").innerHTML = '사진 출처: 더위키 (CC BY-NC-SA 2.0 KR)<br>'
+                                            break;
+                                            case '한천재':
+                                            document.getElementById("image").innerHTML = '<img src="images/map9.jpg" alt="" width="100%"/>'
+                                            document.getElementById("info").innerHTML = '사진 출처: 더위키 (CC BY-NC-SA 2.0 KR)<br>'
+                                            break;
+                                            case '한울관':
+                                            document.getElementById("image").innerHTML = '<img src="images/map10.jpg" alt="" width="100%"/>'
+                                            document.getElementById("info").innerHTML = '사진 출처: 더위키 (CC BY-NC-SA 2.0 KR)<br>'
+                                            break;
+                                            case '승리관':
+                                            document.getElementById("image").innerHTML = '<img src="images/map11.jpg" alt="" width="100%"/>'
+                                            document.getElementById("info").innerHTML = '사진 출처: 더위키 (CC BY-NC-SA 2.0 KR)<br>'
+                                            break;
+                                            case '누리관':
+                                            document.getElementById("image").innerHTML = '<img src="images/map12.jpg" alt="" width="100%"/>'
+                                            document.getElementById("info").innerHTML = '사진 출처: 더위키 (CC BY-NC-SA 2.0 KR)<br>'
+                                            break;
+                                            case '새빛관':
+                                            document.getElementById("image").innerHTML = '<img src="images/map13.jpg" alt="" width="100%"/>'
+                                            document.getElementById("info").innerHTML = '사진 출처: 더위키 (CC BY-NC-SA 2.0 KR)<br>'
+                                            break;
+                                            case '빛솔재':
+                                            document.getElementById("image").innerHTML = '<img src="images/map14.jpg" alt="" width="100%"/>'
+                                            document.getElementById("info").innerHTML = '사진 출처: 더위키 (CC BY-NC-SA 2.0 KR)<br>'
+                                            break;
+                                            case '노천극장':
+                                            document.getElementById("image").innerHTML = '<img src="images/map15.jpg" alt="" width="100%"/>'
+                                            document.getElementById("info").innerHTML = '사진 출처: 더위키 (CC BY-NC-SA 2.0 KR)<br>'
+                                            break;
+                                            case '동해문화예술관':
+                                            document.getElementById("image").innerHTML = '<img src="images/map16.jpg" alt="" width="100%"/>'
+                                            document.getElementById("info").innerHTML = '사진 출처: 더위키 (CC BY-NC-SA 2.0 KR)<br>'
+                                            break;
+                                            case '80주년 기념관':
+                                            document.getElementById("image").innerHTML = '<img src="images/map17.jpg" alt="" width="100%"/>'
+                                            document.getElementById("info").innerHTML = '사진 출처: 더위키 (CC BY-NC-SA 2.0 KR)<br>'
+                                            break;
+                                            case '인터내셔널 하우스':
+                                            document.getElementById("image").innerHTML = '<img src="images/map18.jpg" alt="" width="100%"/>'
+                                            document.getElementById("info").innerHTML = '사진 출처: 더위키 (CC BY-NC-SA 2.0 KR)<br>'
+                                            break;
+                                            case '아이스링크':
+                                            document.getElementById("image").innerHTML = '<img src="images/map19.jpg" alt="" width="100%"/>'
+                                            document.getElementById("info").innerHTML = '사진 출처: 더위키 (CC BY-NC-SA 2.0 KR)<br>'
+                                            break;
+                                            case '광운미디어콘텐츠센터':
+                                            document.getElementById("image").innerHTML = '<img src="images/map20.jpg" alt="" width="100%"/>'
+                                            document.getElementById("info").innerHTML = '사진 출처: 더위키 (CC BY-NC-SA 2.0 KR)<br>'
+                                            break;
+                                            }
+                                        }
+    </script>
+    </head>
+	<body class="is-preload">
+
+		<!-- Wrapper -->
+			<div id="wrapper">
+
+				<!-- Main -->
+					<div id="main">
+						<div class="inner">
+
+							<!-- Header -->
+								<header id="header">
+									<a href="index.html" class="logo"><strong style="color: brown;">Kwangwoon</strong> assistant</a>
+									<ul class="icons">
+										<li><a href="https://github.com/liyusang1/opensourcedevelop" target="_blank" class="icon brands fa-github"><span class="label">Github</span></a></li>
+										<li><a href="https://www.instagram.com/kwangwoonuniv/" target="_blank" class="icon brands fa-instagram"><span class="label">Instagram</span></a></li>
+										<li><a href="https://www.facebook.com/Kwangwoonuniversity" target="_blank"class="icon brands fa-facebook-f"><span class="label">Facebook</span></a></li>
+									</ul>
+								</header>
+
+							<!-- Banner -->
+								<section id="banner">
+									<div class="content">
+										<header>
+											<h1>Kwangwoon University<br/>
+											<strong style="color: brown;">Compus Tour</strong></h1>
+											<p>for kwangwoon university students</p>
+										</header>
+										<p>
+                                            광운대학교 시설들의 위치 및 사진입니다. <br>
+                                            이 페이지는 pc화면에 최적화되어 있습니다.
+										</p>
+									</div>
+									<span class="image object" >
+										<img src="images/compusTour.jpg" alt="" />
+									</span>
+								</section>
+
+							<!-- Section -->
+								<section>
+									<header class="major">
+										<h2 style="font-family:'Nanum Gothic';">Compus Tour</h2>
+                                    </header>
+                                    <div class="features">
+                                    <article style="width: 100%;">
+										<div class="content"> <!--37.619929, 127.059810 광운대-->
+                                            <table style="text-align: center;"> <!--3*7-->
+                                                <tbody>
+                                                    <tr><td onclick="myMarker('화도관')"><span onmouseover="this.style.color='#F56A6A'" onmouseout="this.style.color='gray'">화도관</span></td>
+                                                        <td onclick="myMarker('비마관')" onmouseover="this.style.color='#F56A6A'" onmouseout="this.style.color='gray'">비마관</td>
+                                                        <td onclick="myMarker('옥의관')" onmouseover="this.style.color='#F56A6A'" onmouseout="this.style.color='gray'">옥의관</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td onclick="myMarker('중앙도서관')" onmouseover="this.style.color='#F56A6A'" onmouseout="this.style.color='gray'">중앙도서관</td>
+                                                        <td onclick="myMarker('복지관')" onmouseover="this.style.color='#F56A6A'" onmouseout="this.style.color='gray'">복지관</td>
+                                                        <td onclick="myMarker('연구관')" onmouseover="this.style.color='#F56A6A'" onmouseout="this.style.color='gray'">연구관</td>
+                                                    </tr>  
+                                                    <tr>
+                                                        <td onclick="myMarker('다산재')" onmouseover="this.style.color='#F56A6A'" onmouseout="this.style.color='gray'">다산재</td>
+                                                        <td onclick="myMarker('참빛관')"onmouseover="this.style.color='#F56A6A'" onmouseout="this.style.color='gray'">참빛관</td>
+                                                        <td onclick="myMarker('연촌재')"onmouseover="this.style.color='#F56A6A'" onmouseout="this.style.color='gray'">연촌재</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td onclick="myMarker('한천재')"onmouseover="this.style.color='#F56A6A'" onmouseout="this.style.color='gray'">한천재</td>
+                                                        <td onclick="myMarker('한울관')"onmouseover="this.style.color='#F56A6A'" onmouseout="this.style.color='gray'">한울관</td>
+                                                        <td onclick="myMarker('승리관')"onmouseover="this.style.color='#F56A6A'" onmouseout="this.style.color='gray'">승리관</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td onclick="myMarker('누리관')"onmouseover="this.style.color='#F56A6A'" onmouseout="this.style.color='gray'">누리관</td>
+                                                        <td onclick="myMarker('새빛관')"onmouseover="this.style.color='#F56A6A'" onmouseout="this.style.color='gray'">새빛관</td>
+                                                        <td onclick="myMarker('빛솔재')"onmouseover="this.style.color='#F56A6A'" onmouseout="this.style.color='gray'">빛솔재</td>
+                                                        </tr>
+                                                    <tr>
+                                                        <td onclick="myMarker('노천극장')"onmouseover="this.style.color='#F56A6A'" onmouseout="this.style.color='gray'">노천극장</td>
+                                                        <td onclick="myMarker('동해문화예술관')"onmouseover="this.style.color='#F56A6A'" onmouseout="this.style.color='gray'">동해문화예술관</td>
+                                                        <td onclick="myMarker('80주년 기념관')"onmouseover="this.style.color='#F56A6A'" onmouseout="this.style.color='gray'">80주년 기념관</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td onclick="myMarker('인터내셔널 하우스')"onmouseover="this.style.color='#F56A6A'" onmouseout="this.style.color='gray'">인터내셔널 <br>하우스</td>
+                                                        <td onclick="myMarker('아이스링크')"onmouseover="this.style.color='#F56A6A'" onmouseout="this.style.color='gray'">아이스링크</td>
+                                                        <td onclick="myMarker('광운미디어콘텐츠센터')"onmouseover="this.style.color='#F56A6A'" onmouseout="this.style.color='gray'">광운미디어<br>콘텐츠센터</td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+										</div>
+                                        </article>
+                                        <article>
+                                            <div class="content" >
+                                            <div id="map" style="width:100%;height:500px; "></div>
+
+                                            <script>
+                                            var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
+                                                mapOption = {
+                                                    center: new kakao.maps.LatLng(37.619929, 127.059810), // 지도의 중심좌표
+                                                    level: 3 // 지도의 확대 레벨
+                                                };  
+                                            
+                                            // 지도를 생성합니다    
+                                            var map = new kakao.maps.Map(mapContainer, mapOption);
+                                            // 장소 검색 객체를 생성합니다
+                                            var ps = new kakao.maps.services.Places(); 
+
+                                            // 키워드로 장소를 검색합니다
+                                            ps.keywordSearch('화도관', placesSearchCB); 
+
+                                            // 키워드 검색 완료 시 호출되는 콜백함수 입니다
+                                            function placesSearchCB (data, status, pagination) {
+                                                if (status === kakao.maps.services.Status.OK) {
+
+                                                    // 검색된 장소 위치를 기준으로 지도 범위를 재설정하기위해
+                                                    // LatLngBounds 객체에 좌표를 추가합니다
+                                                    var bounds = new kakao.maps.LatLngBounds();
+
+                                                    displayMarker(data[0]);    
+                                                    bounds.extend(new kakao.maps.LatLng(data[0].y, data[0].x));
+                                                    // 검색된 장소 위치를 기준으로 지도 범위를 재설정합니다
+                                                    map.setBounds(bounds);
+                                                } 
+                                            } 
+                                            function displayMarker(place) {
+                                                // 마커를 생성하고 지도에 표시합니다
+                                                var marker = new kakao.maps.Marker({
+                                                    map: map,
+                                                    position: new kakao.maps.LatLng(place.y, place.x) 
+                                                });
+                                                var infowindow = new kakao.maps.InfoWindow({
+                                                        content: '<div style="width:150px;text-align:center;padding:3px 0;">화도관</div>'
+                                                    });
+                                                    markers.push(marker);
+                                                    infowindow.open(map, marker);
+                                                    windows.push(infowindow);
+                                                }
+                                        </script>
+                                        </div>
+                                    </article>
+                                    <article style="margin-left: 1.5em; margin-right: 1.5em;">
+                                        <div class="content" style="text-align: center;">
+                                            <span class="image object" id="image">
+                                                <img src="images/map1.jpg" alt="" width="100%"/>
+                                            </span>
+                                            <div class="content" style="text-align: center;" id="info">
+                                                사진 출처: 더위키 (CC BY-NC-SA 2.0 KR)<br>
+                                            </div>
+                                        </div>
+                                    </article>
+                                </div>
+                            </section>
+						</div>
+					</div>
+
+				<!-- Sidebar --> 
+					<div id="sidebar">
+						<div class="inner">
+
+							<!-- Menu -->
+                            <nav id="menu">
+                                <header class="major">
+                                    <h2>Menu</h2>
+                                </header>
+                                <ul>
+                                    <li><a href="index.html">홈으로 돌아가기</a></li>
+                                    
+                                    <li>
+                                        <span class="opener">신입생을 위한 정보</span>
+                                        <ul>
+					    <li><a href="makeTimetable.html">시간표 제작 방법</a></li>
+                                            <li><a href="schedule.html">수강신청 노하우</a></li>
+                                            <li><a href="kwClub.html">추천 동아리</a></li>
+                                          
+                                        </ul>
+                                    </li>
+                                    <li><a href="schoolpages.html">교내 페이지 모음</a></li>
+                                    <li><a href="tippage.html">유용한 정보 및 팁들</a></li> 
+                                    <li><a href="./app.html">추천 어플 소개</a></li>
+                                    <li><a href="map.html">학교 건물 소개 및 위치</a></li>
+                                    <li><a href="CentralLibrary.html">중앙 도서관 관련</a></li>
+                                    <li><a href="./Credit_Calculator2.html">학점 계산</a></li>
+                                </ul>
+                            </nav>
+
+							<!-- Section -->
+								<section>
+									<header class="major">
+										<h2>Kwangwoon Issue</h2>
+									</header>
+									<div class="mini-posts">
+										<article>
+											<a href="https://www.donga.com/news/article/all/20201008/103297108/1" class="image" target="_blank"><img src="images/pic07.jpg" alt="" /></a>   <!-- 사이드바 이미지1 -->
+											<p>유지상 광운대 총장 "ICT역량으로 승부할 것..."</p>
+										</article>
+										<article>
+											<a href="https://www.kw.ac.kr/ko/life/newsletter.jsp?BoardMode=view&DUID=34093" target="_blank" class="image"><img src="images/pic08.jpg" alt="" /></a>  <!-- 사이드바 이미지2 -->
+											<p>광운대 2021학년도 수시모집에 평균 13.54대1 경쟁률 기록 </p>
+										</article>
+										<article>
+											<a href="https://www.kw.ac.kr/ko/life/newsletter.jsp?BoardMode=view&DUID=34114" target="_blank" class="image"><img src="images/pic09.jpg" alt="" /></a>   <!-- 사이드바 이미지3 -->
+											<p>손희상 교수(화학공학과), 제7회 젊은공학교육자상 수상 </p>
+										</article>
+									</div>
+									<ul class="actions">
+										<li><a href="https://www.kw.ac.kr/ko/" class="button">More</a></li>  <!-- more버튼 광운대학교와 연결 -->
+									</ul>
+								</section>
+
+							<!-- Section -->
+								<section>
+									<header class="major">
+										<h2>Get in touch</h2>
+									</header>
+									<ul class="contact">
+										<li class="icon solid fa-envelope"><a href="#">liyusang1@naver.com</a></li>
+										<li class="icon solid fa-phone">02-940-5114</li>
+										<li class="icon solid fa-home">서울특별시 노원구 광운로 20<br />
+										20 Gwangun-ro Nowon-gu Seoul</li>
+									</ul>
+								</section>
+
+							<!-- Footer -->
+								<footer id="footer">
+									<p class="copyright">&copy;광운대학교 소프트웨어학부 All rights reserved. <a href="https://unsplash.com">Unsplash</a>. Design: <a href="https://html5up.net">HTML5 UP</a>.</p>
+								</footer>
+
+						</div>
+					</div>
+
+			</div>
+
+		<!-- Scripts -->
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/browser.min.js"></script>
+			<script src="assets/js/breakpoints.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<script src="assets/js/main.js"></script>
+
+	</body>
+</html>
